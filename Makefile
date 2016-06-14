@@ -6,7 +6,8 @@ all: \
 	dist/iD.js \
 	dist/iD.min.js \
 	dist/img/iD-sprite.svg \
-	dist/img/maki-sprite.svg
+	dist/img/maki-sprite.svg \
+	js/lib/id/ui_tested_preset_fields.js
 
 
 MAKI_SOURCES = node_modules/maki/src/*.svg
@@ -43,10 +44,17 @@ $(BUILDJS_TARGETS): $(BUILDJS_SOURCES) build.js
 
 
 MODULE_TARGETS = \
-	js/lib/id/actions.js
+	js/lib/id/actions.js \
+	js/lib/id/ui.js
 
 js/lib/id/actions.js: modules/
 	node_modules/.bin/rollup -f umd -n iD.actions modules/actions/index.js --no-strict > $@
+
+js/lib/id/ui.js: modules/ui/*
+	node_modules/.bin/rollup -f umd -n iD.ui modules/ui/index.js --no-strict > $@
+
+js/lib/id/ui_tested_preset_fields.js: modules/ui/preset/*
+	node_modules/.bin/rollup -f umd -n iD.ui.preset modules/ui/preset/index.js --no-strict > $@
 
 dist/iD.js: \
 	js/lib/bootstrap-tooltip.js \
@@ -70,6 +78,7 @@ dist/iD.js: \
 	js/lib/marked.js \
 	js/id/start.js \
 	js/id/id.js \
+	js/id/ui.js \
 	$(MODULE_TARGETS) \
 	js/id/services.js \
 	js/id/services/mapillary.js \
@@ -155,72 +164,6 @@ dist/iD.js: \
 	js/id/svg/tag_classes.js \
 	js/id/svg/turns.js \
 	js/id/svg/vertices.js \
-	js/id/ui.js \
-	js/id/ui/account.js \
-	js/id/ui/attribution.js \
-	js/id/ui/background.js \
-	js/id/ui/cmd.js \
-	js/id/ui/commit.js \
-	js/id/ui/confirm.js \
-	js/id/ui/conflicts.js \
-	js/id/ui/contributors.js \
-	js/id/ui/disclosure.js \
-	js/id/ui/entity_editor.js \
-	js/id/ui/feature_info.js \
-	js/id/ui/feature_list.js \
-	js/id/ui/flash.js \
-	js/id/ui/full_screen.js \
-	js/id/ui/geolocate.js \
-	js/id/ui/help.js \
-	js/id/ui/info.js \
-	js/id/ui/inspector.js \
-	js/id/ui/intro.js \
-	js/id/ui/lasso.js \
-	js/id/ui/loading.js \
-	js/id/ui/map_data.js \
-	js/id/ui/map_in_map.js \
-	js/id/ui/modal.js \
-	js/id/ui/modes.js \
-	js/id/ui/notice.js \
-	js/id/ui/preset_icon.js \
-	js/id/ui/preset.js \
-	js/id/ui/preset_list.js \
-	js/id/ui/radial_menu.js \
-	js/id/ui/raw_member_editor.js \
-	js/id/ui/raw_membership_editor.js \
-	js/id/ui/raw_tag_editor.js \
-	js/id/ui/restore.js \
-	js/id/ui/save.js \
-	js/id/ui/scale.js \
-	js/id/ui/selection_list.js \
-	js/id/ui/sidebar.js \
-	js/id/ui/source_switch.js \
-	js/id/ui/spinner.js \
-	js/id/ui/splash.js \
-	js/id/ui/status.js \
-	js/id/ui/success.js \
-	js/id/ui/tag_reference.js \
-	js/id/ui/toggle.js \
-	js/id/ui/undo_redo.js \
-	js/id/ui/view_on_osm.js \
-	js/id/ui/zoom.js \
-	js/id/ui/preset/access.js \
-	js/id/ui/preset/address.js \
-	js/id/ui/preset/check.js \
-	js/id/ui/preset/combo.js \
-	js/id/ui/preset/cycleway.js \
-	js/id/ui/preset/input.js \
-	js/id/ui/preset/localized.js \
-	js/id/ui/preset/maxspeed.js \
-	js/id/ui/preset/radio.js \
-	js/id/ui/preset/restrictions.js \
-	js/id/ui/preset/textarea.js \
-	js/id/ui/preset/wikipedia.js \
-	js/id/ui/intro/area.js \
-	js/id/ui/intro/line.js \
-	js/id/ui/intro/navigation.js \
-	js/id/ui/intro/point.js \
-	js/id/ui/intro/start_editing.js \
 	js/id/presets.js \
 	js/id/presets/category.js \
 	js/id/presets/collection.js \
